@@ -45,7 +45,7 @@ class Shader
             }
             
             const char* vShaderCode = vertexCode.c_str();
-            const char * fShaderCode = fragmentCode.c_str();
+            const char* fShaderCode = fragmentCode.c_str();
 
             unsigned int vertex, fragment;
 
