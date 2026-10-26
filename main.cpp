@@ -5,6 +5,7 @@
 
 # include "shader_s.h"
 # include "camera.h"
+# include "materials.h"
 
 # define STB_IMAGE_IMPLEMENTATION
 # include <stb_image.h>
@@ -74,52 +75,52 @@ int main()
     // (X, Y, Z, R, G, B, S, T)
         float vertices[] = {
         // Back
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, -1.0f,      0.0f, 0.0f,
 
         // Front
-        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 1.0f,       0.0f, 0.0f,
 
         // Left
-        -0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,    -1.0f, 0.0f, 0.0f,      1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,    -1.0f, 0.0f, 0.0f,      1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,    -1.0f, 0.0f, 0.0f,      0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,    -1.0f, 0.0f, 0.0f,      0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,    -1.0f, 0.0f, 0.0f,      0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,    -1.0f, 0.0f, 0.0f,      1.0f, 0.0f,
 
         // Right
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,       1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,    1.0f, 0.0f, 0.0f,       1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,       0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,       0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,       0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,    1.0f, 0.0f, 0.0f,       1.0f, 0.0f,
 
         // Bottom
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,    0.0f, -1.0f, 0.0f,      0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,    0.0f, -1.0f, 0.0f,      1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,    0.0f, -1.0f, 0.0f,      1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,    0.0f, -1.0f, 0.0f,      1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,    0.0f, -1.0f, 0.0f,      0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,    0.0f, -1.0f, 0.0f,      0.0f, 1.0f,
 
         // Top
-        -0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 0.0f,   0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f,    0.0f, 1.0f, 0.0f,       0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,    0.0f, 1.0f, 0.0f,       1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,    0.0f, 1.0f, 0.0f,       1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,    0.0f, 1.0f, 0.0f,       1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,    0.0f, 1.0f, 0.0f,       0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,    0.0f, 1.0f, 0.0f,       0.0f, 1.0f
     };
 
     /*
@@ -151,11 +152,11 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(2);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     unsigned int lightCubeVAO;
     glGenVertexArrays(1, &lightCubeVAO);
@@ -208,8 +209,19 @@ int main()
         
         ourShader.use();
 
-        glUniform3f(glGetUniformLocation(ourShader.ID, "objectColor"), 1.0f, 0.5f, 0.31f);
-        glUniform3f(glGetUniformLocation(ourShader.ID, "lightColor"), 1.0f, 1.0f, 1.0f);
+        Material currentMaterial = Materials::PlasticWhite;
+
+        ourShader.setVec3("material.ambient", currentMaterial.ambient.x, currentMaterial.ambient.y, currentMaterial.ambient.z);
+        ourShader.setVec3("material.diffuse", currentMaterial.diffuse.x, currentMaterial.diffuse.y, currentMaterial.diffuse.z);
+        ourShader.setVec3("material.specular", currentMaterial.specular.x, currentMaterial.specular.y, currentMaterial.specular.z);
+        ourShader.setFloat("material.shininess", currentMaterial.shininess * 128.0f);
+
+        ourShader.setVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
+        ourShader.setVec3("light.ambient", 0.5f, 0.5f, 0.5f);
+        ourShader.setVec3("light.diffuse", 1.5f, 1.5f, 1.5f);
+        ourShader.setVec3("light.specular", 2.0f, 2.0f, 2.0f);
+
+        glUniform3f(glGetUniformLocation(ourShader.ID, "viewPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(100.0f), glm::vec3(0.5f, 1.0f, 0.0f));
