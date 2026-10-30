@@ -167,7 +167,7 @@ int main()
     glEnableVertexAttribArray(0);
 
     unsigned int diffuseMap = loadTexture("assets/pepe.jpg"),
-    specularMap = loadTexture("assets/pepe_specular.jpg");
+    specularMap = loadTexture("assets/pepe_specular.png");
 
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
@@ -193,11 +193,15 @@ int main()
         lightingShader.setVec3("light.position", lightPos.x, lightPos.y, lightPos.z);
         glUniform3f(glGetUniformLocation(lightingShader.ID, "viewPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 
-        Material currentMaterial = Materials::PlasticWhite;
+        Material currentMaterial = Materials::Brass;
 
         lightingShader.setVec3("light.ambient", 0.5f, 0.5f, 0.5f);
         lightingShader.setVec3("light.diffuse", 1.5f, 1.5f, 1.5f);
         lightingShader.setVec3("light.specular", 2.0f, 2.0f, 2.0f);
+
+        lightingShader.setFloat("light.constant", 1.0f);
+        lightingShader.setFloat("light.linear", 0.09f);
+        lightingShader.setFloat("light.quadratic", 0.032f);
 
         lightingShader.setVec3("material.ambient", currentMaterial.ambient.x, currentMaterial.ambient.y, currentMaterial.ambient.z);
         // lightingShader.setVec3("material.diffuse", currentMaterial.diffuse.x, currentMaterial.diffuse.y, currentMaterial.diffuse.z);
@@ -205,7 +209,7 @@ int main()
         lightingShader.setFloat("material.shininess", currentMaterial.shininess * 128.0f);
 
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(100.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(10.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
         glm::mat4 view = camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
